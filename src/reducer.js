@@ -1,7 +1,9 @@
-const reducer = (state, action = {}) => {
-  if (action.type === "ADD_TODO") {
+import * as actionTypes from "./actions";
+
+const reducer = (state = {}, action = {}) => {
+  if (action.type === actionTypes.ADD_TODO) {
     return [...state, action.todo];
-  } else if (action.type === "UPDATE_TODO") {
+  } else if (action.type === actionTypes.UPDATE_TODO) {
     return state.map(todo => {
       if (todo.id === action.payload.id) {
         return {
@@ -11,7 +13,7 @@ const reducer = (state, action = {}) => {
       }
       return todo;
     });
-  } else if (action.type === "DELETE_TODO") {
+  } else if (action.type === actionTypes.DELETE_TODO) {
     return state.filter(todo => {
       return todo.id !== action.id;
     });
