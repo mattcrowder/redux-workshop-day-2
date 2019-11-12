@@ -3,7 +3,7 @@ import reducer from "../reducer";
 test("reducer returns the state you pass in when action is empty", () => {
   expect(reducer({})).toEqual({});
 });
-let state = reducer([]);
+let state = reducer({ todos: [] });
 test(`when passing in an action with type 'ADD_TODO', it adds that item to the list`, () => {
   const todo = {
     id: "a random id",
@@ -14,7 +14,7 @@ test(`when passing in an action with type 'ADD_TODO', it adds that item to the l
     type: "ADD_TODO",
     todo
   });
-  expect(state).toEqual([todo]);
+  expect(state.todos).toEqual([todo]);
 
   const todo2 = {
     id: "another random id",
@@ -23,7 +23,7 @@ test(`when passing in an action with type 'ADD_TODO', it adds that item to the l
   };
   state = reducer(state, { type: "ADD_TODO", todo: todo2 });
 
-  expect(state).toEqual([todo, todo2]);
+  expect(state.todos).toEqual([todo, todo2]);
 });
 
 test(`when passing in an action with type UPDATE_TODO,
@@ -38,17 +38,19 @@ it updates the corresponding todo based on the id provided`, () => {
     status: "COMPLETED"
   };
   state = reducer(state, { type: "UPDATE_TODO", payload });
-  expect(state[0]).toMatchObject(payload);
+  expect(state.todos[0]).toMatchObject(payload);
 
   state = reducer(state, { type: "UPDATE_TODO", payload: payload2 });
-  expect(state[1]).toMatchObject(payload2);
+  expect(state.todos[1]).toMatchObject(payload2);
 });
 
-test(`when passing in an action with type DELETE_TODO, 
+test(`when passing in an action with type DELETE_TODO,
 it deletes the corresponding TODO based on the id provided
 `, () => {
   const id = "a random id";
   state = reducer(state, { type: "DELETE_TODO", id });
 
-  expect(state.find(todo => todo.id === "a random id")).toEqual(undefined);
+  expect(state.todos.find(todo => todo.id === "a random id")).toEqual(
+    undefined
+  );
 });
