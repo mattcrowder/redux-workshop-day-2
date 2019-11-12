@@ -4,8 +4,12 @@ const createStore = (reducer = () => {}, initialState, middleware) => {
   let subscriptions = [];
 
   const dispatch = action => {
-    state = reducer(state, action);
-    subscriptions.forEach(s => s());
+    if (typeof action === "function") {
+      action(dispatch);
+    } else {
+      state = reducer(state, action);
+      subscriptions.forEach(s => s());
+    }
   };
   const subscribe = s => {
     subscriptions.push(s);

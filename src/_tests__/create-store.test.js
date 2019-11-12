@@ -1,18 +1,19 @@
 import createStore from "../create-store";
 import reducer from "../reducer";
+import { addTodo, deleteTodo } from "../actions";
 test("It returns an object", () => {
   const store = createStore();
   expect(store).toMatchObject({});
 });
 
-test(`createStore returns an object that has a 
+test(`createStore returns an object that has a
 method called getState, which returns the state
 that you initially passed into createStore`, () => {
   const store = createStore(() => {}, {});
   expect(store.getState()).toEqual({});
 });
 
-test(`createStore returns an object that has 
+test(`createStore returns an object that has
 a method called dispatch which takes in an action,
 and that action updates the state
 `, () => {
@@ -24,7 +25,7 @@ and that action updates the state
     message: "Go to the react chapter",
     status: "INCOMPLETE"
   };
-  store.dispatch({ type: "ADD_TODO", todo });
+  store.dispatch(addTodo(todo));
   expect(store.getState()).toEqual([todo]);
 });
 
@@ -51,13 +52,13 @@ passed into subscribe will get invoked after
   const subscription = jest.fn();
   store.subscribe(subscription);
   const id = "a random id";
-  store.dispatch({ type: "DELETE_TODO", id });
+  store.dispatch(deleteTodo(id));
   expect(store.getState()).toEqual([]);
 
   expect(subscription).toHaveBeenCalled();
 });
 
-test(`when dispatching an action that returns a function, 
+test.skip(`when dispatching an action that returns a function,
 you can dispatch multiple actions on it`, () => {
   const store = createStore(reducer, []);
   const subscription = jest.fn();
@@ -66,14 +67,27 @@ you can dispatch multiple actions on it`, () => {
     return dispatch => {
       try {
         dispatch({ type: "START_LOADING" });
-        dispatch({
-          type: "ADD_TODO",
-          todo: {
+        dispatch(
+          addTodo({
             id: "a random id",
             message: "clean laundry",
             status: "INCOMPLETE"
-          }
-        });
+          })
+        );
+        dispatch(
+          addTodo({
+            id: "another random id",
+            message: "clean dishes",
+            status: "INCOMPLETE"
+          })
+        );
+        dispatch(
+          addTodo({
+            id: "aasdf",
+            message: "clean sheets",
+            status: "INCOMPLETE"
+          })
+        );
       } catch (e) {
       } finally {
         dispatch({ type: "STOP_LOADING" });
@@ -88,5 +102,5 @@ you can dispatch multiple actions on it`, () => {
     { id: "aasdf", message: "clean sheets", status: "INCOMPLETE" }
   ]);
 
-  expect(subscription).toHaveBeenCalledTimes(3);
+  expect(subscription).toHaveBeenCalledTimes(5);
 });
