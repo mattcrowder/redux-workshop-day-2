@@ -11,7 +11,7 @@ Todos.defaultProps = {
   todos: [
     {
       id: "a random id",
-      message: "do laundry"
+      message: "Do laundry"
     }
   ]
 };

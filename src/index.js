@@ -1,12 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import "./styles.css";
-import Todos from "./components/todos";
+import App from "./app";
 
-function App() {
-  return <Todos />;
+function Index() {
+  return <App />;
 }
 
 const rootElement = document.getElementById("root");
-ReactDOM.render(<App />, rootElement);
+ReactDOM.render(<Index />, rootElement);
