@@ -10,3 +10,7 @@ it.skip(`renders when Todos is wrapped in a function that takes in two arguments
 and then returns another Component`, () => {
   render(<Todos />);
 });
+
+it.skip(`displays incomplete todos`, () => {
+
+})

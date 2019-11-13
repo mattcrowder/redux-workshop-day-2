@@ -47,20 +47,8 @@ class Todos extends React.Component {
 }
 
 Todos.defaultProps = {
-  incompleteTodos: [
-    {
-      id: "a random id",
-      message: "Do laundry",
-      status: "INCOMPLETE"
-    }
-  ],
-  completeTodos: [
-    {
-      id: "another random id",
-      message: "Mow the lawn",
-      status: "COMPLETE"
-    }
-  ]
+  incompleteTodos: [],
+  completeTodos: []
 };
 const mapStateToProps = () => {};
 const mapDispatchToProps = () => {};
