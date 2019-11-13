@@ -1,11 +1,15 @@
-const createStore = (reducer = () => {}, initialState, middleware) => {
+const createStore = (reducer = () => {}, initialState) => {
   let state = initialState;
   const getState = () => state;
   let subscriptions = [];
 
   const dispatch = action => {
-    state = reducer(state, action);
-    subscriptions.forEach(s => s());
+    if (typeof action === "function") {
+      action(dispatch);
+    } else {
+      state = reducer(state, action);
+      subscriptions.forEach(s => s());
+    }
   };
   const subscribe = s => {
     subscriptions.push(s);

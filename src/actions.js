@@ -1,11 +1,16 @@
+import shortid from "shortid";
+
 export const ADD_TODO = "ADD_TODO";
 export const UPDATE_TODO = "UPDATE_TODO";
 export const DELETE_TODO = "DELETE_TODO";
-
-export const addTodo = todo => {
+export const addTodo = message => {
   return {
     type: ADD_TODO,
-    todo
+    todo: {
+      message,
+      id: shortid.generate(),
+      status: "INCOMPLETE"
+    }
   };
 };
 

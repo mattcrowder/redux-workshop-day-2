@@ -1,19 +1,16 @@
 import React from "react";
 import Todos from "./components/todos";
 import { Grid, Typography } from "@material-ui/core";
+import createStore from "./create-store";
+import reducer from "./reducer";
+import { ReduxProvider } from "./react-redux";
 
+const store = createStore(reducer, { todos: [] });
 const App = () => {
   return (
-    <Grid container direction="column" alignItems="center">
-      <Grid item>
-        <Typography variant="h4">Incomplete todos</Typography>
-        <Todos />
-      </Grid>
-
-      <Grid item>
-        <Typography variant="h4">Completed todos</Typography>
-      </Grid>
-    </Grid>
+    <ReduxProvider store={store}>
+      <Todos />
+    </ReduxProvider>
   );
 };
 

@@ -20,13 +20,12 @@ and that action updates the state
   const store = createStore(reducer, { todos: [] });
 
   expect(store.getState().todos).toEqual([]);
-  const todo = {
-    id: "a random id",
-    message: "Go to the react chapter",
+  const message = "Go to the react chapter";
+  store.dispatch(addTodo(message));
+  expect(store.getState().todos[0]).toMatchObject({
+    message,
     status: "INCOMPLETE"
-  };
-  store.dispatch(addTodo(todo));
-  expect(store.getState().todos).toEqual([todo]);
+  });
 });
 
 test(`createStore returns an object that has
@@ -60,7 +59,7 @@ passed into subscribe will get invoked after
   expect(subscription).toHaveBeenCalled();
 });
 
-test.skip(`when dispatching an action that returns a function,
+test(`when dispatching an action that returns a function,
 you can dispatch multiple actions on it`, () => {
   const store = createStore(reducer, { todos: [] });
   const subscription = jest.fn();
@@ -69,27 +68,9 @@ you can dispatch multiple actions on it`, () => {
     return dispatch => {
       try {
         dispatch({ type: "START_LOADING" });
-        dispatch(
-          addTodo({
-            id: "a random id",
-            message: "clean laundry",
-            status: "INCOMPLETE"
-          })
-        );
-        dispatch(
-          addTodo({
-            id: "another random id",
-            message: "clean dishes",
-            status: "INCOMPLETE"
-          })
-        );
-        dispatch(
-          addTodo({
-            id: "aasdf",
-            message: "clean sheets",
-            status: "INCOMPLETE"
-          })
-        );
+        dispatch(addTodo("clean laundry"));
+        dispatch(addTodo("clean dishes"));
+        dispatch(addTodo("clean sheets"));
       } catch (e) {
       } finally {
         dispatch({ type: "STOP_LOADING" });
@@ -97,12 +78,18 @@ you can dispatch multiple actions on it`, () => {
     };
   };
   store.dispatch(action());
-
-  expect(store.getState().todos).toEqual([
-    { id: "a random id", message: "clean laundry", status: "INCOMPLETE" },
-    { id: "another random id", message: "clean dishes", status: "INCOMPLETE" },
-    { id: "aasdf", message: "clean sheets", status: "INCOMPLETE" }
-  ]);
+  expect(store.getState().todos[0]).toMatchObject({
+    message: "clean laundry",
+    status: "INCOMPLETE"
+  });
+  expect(store.getState().todos[1]).toMatchObject({
+    message: "clean dishes",
+    status: "INCOMPLETE"
+  });
+  expect(store.getState().todos[2]).toMatchObject({
+    message: "clean sheets",
+    status: "INCOMPLETE"
+  });
 
   expect(subscription).toHaveBeenCalledTimes(5);
 });

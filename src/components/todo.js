@@ -17,63 +17,77 @@ import DoneIcon from "@material-ui/icons/Done";
 import CancelIcon from "@material-ui/icons/Cancel";
 const Card = styled(MuiCard)`
   max-width: 345px;
+  height: ${props => props.status === "COMPLETE" && "100px"};
 `;
-
-const Todo = props => {
-  const { todo } = props;
-  const [message, setMessage] = React.useState(props.todo.message);
-  const [isEditing, setEditing] = React.useState(false);
-
-  return (
-    <Card>
-      <CardHeader
-        title={todo.message}
-        action={
-          isEditing === false ? (
-            <>
-              <IconButton key="done">
-                <DoneIcon />
-              </IconButton>
-              <IconButton key="edit" onClick={() => setEditing(!isEditing)}>
-                <EditIcon />
-              </IconButton>
-              <IconButton key="delete">
-                <DeleteIcon />
-              </IconButton>
-            </>
-          ) : (
-            <IconButton key="cancel" onClick={() => setEditing(false)}>
-              <CancelIcon />
-            </IconButton>
-          )
-        }
-      />
-      <CardContent>
-        <Collapse in={isEditing} timeout="auto" unmountOnExit>
-          <Grid container alignItems="center" justify="space-between">
-            <Grid item>
-              <TextField
-                label="Message"
-                variant="outlined"
-                value={message}
-                onChange={e => setMessage(e.target.value)}
-              />
+class Todo extends React.Component {
+  state = {
+    message: this.props.todo.message,
+    isEditing: false
+  };
+  render() {
+    const { todo } = this.props;
+    const { isEditing, message } = this.state;
+    return (
+      <Card status={todo.status}>
+        {todo.status === "INCOMPLETE" ? (
+          <CardHeader
+            title={todo.message}
+            action={
+              isEditing === false ? (
+                <>
+                  <IconButton key="done">
+                    <DoneIcon />
+                  </IconButton>
+                  <IconButton
+                    key="edit"
+                    onClick={() => this.setState({ isEditing: !isEditing })}
+                  >
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton key="delete">
+                    <DeleteIcon />
+                  </IconButton>
+                </>
+              ) : (
+                <IconButton
+                  key="cancel"
+                  onClick={() => this.setState({ isEditing: false })}
+                >
+                  <CancelIcon />
+                </IconButton>
+              )
+            }
+          />
+        ) : (
+          <CardHeader title={todo.message} />
+        )}
+        <CardContent>
+          <Collapse in={isEditing} timeout="auto" unmountOnExit>
+            <Grid container alignItems="center" justify="space-between">
+              <Grid item>
+                <TextField
+                  label="Message"
+                  variant="outlined"
+                  value={message}
+                  onChange={e => this.setState({ message: e.target.value })}
+                />
+              </Grid>
+              <Grid item>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => this.setState({ isEditing: false })}
+                >
+                  UPDATE
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => setEditing(false)}
-              >
-                UPDATE
-              </Button>
-            </Grid>
-          </Grid>
-        </Collapse>
-      </CardContent>
-    </Card>
-  );
-};
+          </Collapse>
+        </CardContent>
+      </Card>
+    );
+  }
+}
 
 Todo.propTypes = {
   todo: PropTypes.shape({
