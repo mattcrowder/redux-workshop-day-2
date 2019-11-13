@@ -1,6 +1,5 @@
 import React from "react";
 import Todos from "./components/todos";
-import { Grid, Typography } from "@material-ui/core";
 import createStore from "./create-store";
 import reducer from "./reducer";
 import { ReduxProvider } from "./react-redux";

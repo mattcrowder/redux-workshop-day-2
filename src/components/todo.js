@@ -8,7 +8,6 @@ import {
   Collapse,
   TextField,
   Button,
-  Grid,
   CardContent
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -18,6 +17,12 @@ import CancelIcon from "@material-ui/icons/Cancel";
 const Card = styled(MuiCard)`
   max-width: 345px;
   height: ${props => props.status === "COMPLETE" && "100px"};
+`;
+
+const CollapseContent = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 class Todo extends React.Component {
   state = {
@@ -63,25 +68,21 @@ class Todo extends React.Component {
         )}
         <CardContent>
           <Collapse in={isEditing} timeout="auto" unmountOnExit>
-            <Grid container alignItems="center" justify="space-between">
-              <Grid item>
-                <TextField
-                  label="Message"
-                  variant="outlined"
-                  value={message}
-                  onChange={e => this.setState({ message: e.target.value })}
-                />
-              </Grid>
-              <Grid item>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => this.setState({ isEditing: false })}
-                >
-                  UPDATE
-                </Button>
-              </Grid>
-            </Grid>
+            <CollapseContent>
+              <TextField
+                label="Message"
+                variant="outlined"
+                value={message}
+                onChange={e => this.setState({ message: e.target.value })}
+              />
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => this.setState({ isEditing: false })}
+              >
+                UPDATE
+              </Button>
+            </CollapseContent>
           </Collapse>
         </CardContent>
       </Card>
