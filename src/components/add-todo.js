@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import styled from "styled-components";
 import * as actions from "../actions";
-import { connect } from "../solutions/react-redux";
+import { connect } from "../react-redux";
 const Modal = styled(MuiModal)`
   display: flex;
   align-items: center;

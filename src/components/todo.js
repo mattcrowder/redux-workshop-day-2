@@ -14,7 +14,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import DoneIcon from "@material-ui/icons/Done";
 import CancelIcon from "@material-ui/icons/Cancel";
-import { connect } from "../solutions/react-redux";
+import { connect } from "../react-redux";
 import * as actions from "../actions";
 
 const Card = styled(MuiCard)`

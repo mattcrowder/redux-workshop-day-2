@@ -1,9 +1,9 @@
 // https://github.com/reduxjs/reselect
 
-export const getIncompleteTodos = state => {
+const getIncompleteTodos = state => {
   return state.todos.filter(todo => todo.status === "INCOMPLETE");
 };
 
-export const getCompleteTodos = state => {
+const getCompleteTodos = state => {
   return state.todos.filter(todo => todo.status === "COMPLETE");
 };

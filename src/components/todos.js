@@ -1,11 +1,11 @@
 import React from "react";
 import Todo from "./todo";
-import { connect } from "../solutions/react-redux";
+import { connect } from "../react-redux";
 import { Typography, Fab } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import AddTodo from "./add-todo";
 import styled from "styled-components";
-import { getCompleteTodos, getIncompleteTodos } from "../solutions/selectors";
+import { getCompleteTodos, getIncompleteTodos } from "../selectors";
 const Container = styled.div`
   display: flex;
   flex-direction: column;

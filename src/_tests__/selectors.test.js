@@ -1,4 +1,4 @@
-import { getIncompleteTodos, getCompleteTodos } from "../solutions/selectors";
+import { getIncompleteTodos, getCompleteTodos } from "../selectors";
 const state = {
   todos: [
     {

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 const Redux = React.createContext();
 
-export class ReduxProvider extends Component {
+class ReduxProvider extends Component {
   state = {
     store: this.props.store
   };
@@ -18,7 +18,7 @@ ReduxProvider.propTypes = {
   store: PropTypes.object
 };
 
-export const connect = (
+const connect = (
   mapStateToProps = () => {},
   mapDispatchToProps = () => {}
 ) => {

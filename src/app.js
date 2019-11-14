@@ -2,7 +2,7 @@ import React from "react";
 import Todos from "./components/todos";
 import createStore from "./create-store";
 import reducer from "./reducer";
-import { ReduxProvider } from "./solutions/react-redux";
+import { ReduxProvider } from "./react-redux";
 
 const store = createStore(reducer, {
   todos: [

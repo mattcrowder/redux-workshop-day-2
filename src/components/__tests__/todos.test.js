@@ -1,7 +1,7 @@
 import React from "react";
 import { render as rtlRender, fireEvent } from "@testing-library/react";
 import Todos from "../todos";
-import { ReduxProvider } from "../../solutions/react-redux";
+import { ReduxProvider } from "../../react-redux";
 import createStore from "../../create-store";
 import reducer from "../../reducer";
 
