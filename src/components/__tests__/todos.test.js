@@ -5,30 +5,7 @@ import { ReduxProvider } from "../../solutions/react-redux";
 import createStore from "../../create-store";
 import reducer from "../../reducer";
 
-it("renders", () => {
-  render(<Todos />);
-});
-
-it(`renders when Todos is wrapped in a function that takes in two arguments, mapStateToProps, mapDispatchToProps
-and then returns another Component`, () => {
-  render(<Todos />);
-});
-
-it(`adds a todo and renders it as incomplete`, () => {
-  const { getByLabelText } = render(<Todos />);
-  fireEvent.click(getByLabelText("add todo"));
-
-  fireEvent.change(getByLabelText("message"), {
-    target: { value: "attend react chapter" }
-  });
-
-  fireEvent.click(getByLabelText("save todo"));
-
-  expect(
-    getByLabelText(/incomplete attend react chapter/i)
-  ).toBeInTheDocument();
-});
-it(`displays incomplete todos (ideally) using getIncompleteTodos selector`, () => {
+it.skip(`displays incomplete todos (ideally) using getIncompleteTodos selector`, () => {
   const { getByLabelText } = render(<Todos />, {
     todos: [
       {
@@ -50,7 +27,7 @@ it(`displays incomplete todos (ideally) using getIncompleteTodos selector`, () =
   expect(getByLabelText(/incomplete attend sail chapter/i)).toBeInTheDocument();
 });
 
-it(`displays complete todos (ideally) using getCompleteTodos selector`, () => {
+it.skip(`displays complete todos (ideally) using getCompleteTodos selector`, () => {
   const { getByLabelText, debug } = render(<Todos />, {
     todos: [
       {
@@ -71,7 +48,22 @@ it(`displays complete todos (ideally) using getCompleteTodos selector`, () => {
   expect(getByLabelText(/completed attend sail chapter/i)).toBeInTheDocument();
 });
 
-it(`updates todo messages properly`, () => {
+it.skip(`adds a todo and renders it as incomplete`, () => {
+  const { getByLabelText } = render(<Todos />);
+  fireEvent.click(getByLabelText("add todo"));
+
+  fireEvent.change(getByLabelText("message"), {
+    target: { value: "attend react chapter" }
+  });
+
+  fireEvent.click(getByLabelText("save todo"));
+
+  expect(
+    getByLabelText(/incomplete attend react chapter/i)
+  ).toBeInTheDocument();
+});
+
+it.skip(`updates todo messages properly`, () => {
   const { getByText, queryByText, getByLabelText } = render(<Todos />, {
     todos: [
       {
@@ -101,7 +93,7 @@ it(`updates todo messages properly`, () => {
   expect(getByText(/attend all hands/i)).toBeInTheDocument();
 });
 
-it(`can delete todos`, () => {
+it.skip(`can delete todos`, () => {
   const { queryByText, getByLabelText } = render(<Todos />, {
     todos: [
       {
@@ -122,7 +114,7 @@ it(`can delete todos`, () => {
   expect(queryByText(/complete 360 feedback/i)).toBeNull();
 });
 
-it(`when clicking on mark todo.message complete, it moves the message over to completed`, () => {
+it.skip(`when clicking on mark todo.message complete, it moves the message over to completed`, () => {
   const { queryByText, getByLabelText } = render(<Todos />, {
     todos: [
       {

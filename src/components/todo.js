@@ -35,17 +35,12 @@ class Todo extends React.Component {
   };
 
   updateMessage = () => {
-    this.props.updateTodo({ ...this.props.todo, message: this.state.message });
     this.setState({ isEditing: false });
   };
 
-  deleteTodo = () => {
-    this.props.deleteTodo(this.props.todo.id);
-  };
+  deleteTodo = () => {};
 
-  markComplete = () => {
-    this.props.updateTodo({ ...this.props.todo, status: "COMPLETE" });
-  };
+  markComplete = () => {};
   render() {
     const { todo } = this.props;
     const { isEditing, message } = this.state;
@@ -126,15 +121,10 @@ class Todo extends React.Component {
 }
 
 Todo.propTypes = {
-  todo: PropTypes.shape({
-    message: PropTypes.string.isRequired
-  }).isRequired
+  todo: PropTypes.object
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-    deleteTodo: id => dispatch(actions.deleteTodo(id)),
-    updateTodo: todo => dispatch(actions.updateTodo(todo))
-  };
+  return {};
 };
 export default connect(undefined, mapDispatchToProps)(Todo);

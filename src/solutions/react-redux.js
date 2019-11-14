@@ -1,9 +1,21 @@
-import React from "react";
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 const Redux = React.createContext();
 
-export const ReduxProvider = ({ children, store }) => {
-  return <Redux.Provider value={store}>{children}</Redux.Provider>;
+export class ReduxProvider extends Component {
+  state = {
+    store: this.props.store
+  };
+  render() {
+    const { children } = this.props;
+    return <Redux.Provider value={this.state.store}>{children}</Redux.Provider>;
+  }
+}
+
+ReduxProvider.propTypes = {
+  children: PropTypes.node,
+  store: PropTypes.object
 };
 
 export const connect = (

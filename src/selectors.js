@@ -1,3 +1,5 @@
+// https://github.com/reduxjs/reselect
+
 export const getIncompleteTodos = state => {
   return state.todos;
 };

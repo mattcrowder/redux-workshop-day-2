@@ -1,4 +1,4 @@
-import createStore from "../solutions/create-store";
+import createStore from "../create-store";
 import reducer from "../reducer";
 import { addTodo, deleteTodo } from "../actions";
 test("It returns an object", () => {

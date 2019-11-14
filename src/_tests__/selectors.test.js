@@ -18,7 +18,7 @@ const state = {
     }
   ]
 };
-test("getIncompleteTodos returns all the todos with status INCOMPLETE", () => {
+test.skip("getIncompleteTodos returns all the todos with status INCOMPLETE", () => {
   expect(getIncompleteTodos(state)).toEqual([
     {
       id: "one",
@@ -33,7 +33,7 @@ test("getIncompleteTodos returns all the todos with status INCOMPLETE", () => {
   ]);
 });
 
-test("getCompleteTodos returns all the todos with status COMPLETE", () => {
+test.skip("getCompleteTodos returns all the todos with status COMPLETE", () => {
   expect(getCompleteTodos(state)).toEqual([
     {
       id: "three",

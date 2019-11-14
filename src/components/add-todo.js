@@ -20,7 +20,6 @@ const Modal = styled(MuiModal)`
 class AddTodo extends React.Component {
   state = { message: "" };
   addTodo = () => {
-    this.props.addTodo(this.state.message);
     this.props.closeModal();
   };
   render() {
@@ -57,10 +56,7 @@ class AddTodo extends React.Component {
   }
 }
 
-const mapStateToProps = () => {};
 const mapDispatchToProps = dispatch => {
-  return {
-    addTodo: message => dispatch(actions.addTodo(message))
-  };
+  return {};
 };
-export default connect(mapStateToProps, mapDispatchToProps)(AddTodo);
+export default connect(undefined, mapDispatchToProps)(AddTodo);

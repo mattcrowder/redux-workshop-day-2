@@ -5,6 +5,8 @@ import { Typography, Fab } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import AddTodo from "./add-todo";
 import styled from "styled-components";
+import * as actions from "../actions";
+
 import { getCompleteTodos, getIncompleteTodos } from "../solutions/selectors";
 const Container = styled.div`
   display: flex;
@@ -16,6 +18,7 @@ class Todos extends React.Component {
   state = {
     isAdding: false
   };
+
   render() {
     const { incompleteTodos, completeTodos } = this.props;
     return (
@@ -52,7 +55,10 @@ Todos.defaultProps = {
   completeTodos: []
 };
 const mapStateToProps = state => {
-  return {};
+  return {
+    incompleteTodos: getIncompleteTodos(state),
+    completeTodos: getCompleteTodos(state)
+  };
 };
-
-export default connect(mapStateToProps)(Todos);
+const mapDispatchToProps = dispatch => {};
+export default connect(mapStateToProps, mapDispatchToProps)(Todos);
