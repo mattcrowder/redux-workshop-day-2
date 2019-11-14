@@ -14,8 +14,12 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import DoneIcon from "@material-ui/icons/Done";
 import CancelIcon from "@material-ui/icons/Cancel";
+import { connect } from "../solutions/react-redux";
+import * as actions from "../actions";
+
 const Card = styled(MuiCard)`
   max-width: 345px;
+  width: ${props => props.status === "COMPLETE" && "200px"};
   height: ${props => props.status === "COMPLETE" && "100px"};
 `;
 
@@ -29,62 +33,93 @@ class Todo extends React.Component {
     message: this.props.todo.message,
     isEditing: false
   };
+
+  updateMessage = () => {
+    this.props.updateTodo({ ...this.props.todo, message: this.state.message });
+    this.setState({ isEditing: false });
+  };
+
+  deleteTodo = () => {
+    this.props.deleteTodo(this.props.todo.id);
+  };
+
+  markComplete = () => {
+    this.props.updateTodo({ ...this.props.todo, status: "COMPLETE" });
+  };
   render() {
     const { todo } = this.props;
     const { isEditing, message } = this.state;
     return (
-      <Card status={todo.status}>
+      <Card
+        status={todo.status}
+        aria-label={`${
+          todo.status === "INCOMPLETE" ? "Incomplete" : "Completed"
+        } ${todo.message}`}
+      >
         {todo.status === "INCOMPLETE" ? (
-          <CardHeader
-            title={todo.message}
-            action={
-              isEditing === false ? (
-                <>
-                  <IconButton key="done">
-                    <DoneIcon />
-                  </IconButton>
+          <>
+            <CardHeader
+              title={todo.message}
+              action={
+                isEditing === false ? (
+                  <>
+                    <IconButton
+                      onClick={this.markComplete}
+                      key="done"
+                      aria-label={`mark ${todo.message} complete`}
+                    >
+                      <DoneIcon />
+                    </IconButton>
+                    <IconButton
+                      aria-label={`edit ${todo.message}`}
+                      key="edit"
+                      onClick={() => this.setState({ isEditing: !isEditing })}
+                    >
+                      <EditIcon />
+                    </IconButton>
+                    <IconButton
+                      onClick={this.deleteTodo}
+                      key="delete"
+                      aria-label={`delete ${todo.message}`}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </>
+                ) : (
                   <IconButton
-                    key="edit"
-                    onClick={() => this.setState({ isEditing: !isEditing })}
+                    key="cancel"
+                    onClick={() => this.setState({ isEditing: false })}
                   >
-                    <EditIcon />
+                    <CancelIcon />
                   </IconButton>
-                  <IconButton key="delete">
-                    <DeleteIcon />
-                  </IconButton>
-                </>
-              ) : (
-                <IconButton
-                  key="cancel"
-                  onClick={() => this.setState({ isEditing: false })}
-                >
-                  <CancelIcon />
-                </IconButton>
-              )
-            }
-          />
+                )
+              }
+            />
+            <CardContent>
+              <Collapse in={isEditing} timeout="auto" unmountOnExit>
+                <CollapseContent>
+                  <TextField
+                    inputProps={{ "aria-label": "message" }}
+                    label="Message"
+                    variant="outlined"
+                    value={message}
+                    onChange={e => this.setState({ message: e.target.value })}
+                  />
+                  <Button
+                    aria-label="submit todo message update"
+                    variant="contained"
+                    color="primary"
+                    onClick={this.updateMessage}
+                  >
+                    UPDATE
+                  </Button>
+                </CollapseContent>
+              </Collapse>
+            </CardContent>
+          </>
         ) : (
           <CardHeader title={todo.message} />
         )}
-        <CardContent>
-          <Collapse in={isEditing} timeout="auto" unmountOnExit>
-            <CollapseContent>
-              <TextField
-                label="Message"
-                variant="outlined"
-                value={message}
-                onChange={e => this.setState({ message: e.target.value })}
-              />
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => this.setState({ isEditing: false })}
-              >
-                UPDATE
-              </Button>
-            </CollapseContent>
-          </Collapse>
-        </CardContent>
       </Card>
     );
   }
@@ -96,4 +131,10 @@ Todo.propTypes = {
   }).isRequired
 };
 
-export default Todo;
+const mapDispatchToProps = dispatch => {
+  return {
+    deleteTodo: id => dispatch(actions.deleteTodo(id)),
+    updateTodo: todo => dispatch(actions.updateTodo(todo))
+  };
+};
+export default connect(undefined, mapDispatchToProps)(Todo);

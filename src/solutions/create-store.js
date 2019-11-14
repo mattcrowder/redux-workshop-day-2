@@ -1,6 +1,8 @@
 const createStore = (reducer = () => {}, initialState, middleware) => {
   let state = initialState;
-  const getState = () => state;
+  const getState = () => {
+    return state;
+  };
   let subscriptions = [];
 
   const dispatch = action => {

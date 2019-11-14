@@ -9,6 +9,8 @@ import {
   TextField
 } from "@material-ui/core";
 import styled from "styled-components";
+import * as actions from "../actions";
+import { connect } from "../solutions/react-redux";
 const Modal = styled(MuiModal)`
   display: flex;
   align-items: center;
@@ -18,8 +20,8 @@ const Modal = styled(MuiModal)`
 class AddTodo extends React.Component {
   state = { message: "" };
   addTodo = () => {
+    this.props.addTodo(this.state.message);
     this.props.closeModal();
-    // this.props.addTodo()
   };
   render() {
     const { open, closeModal } = this.props;
@@ -47,4 +49,10 @@ class AddTodo extends React.Component {
   }
 }
 
-export default AddTodo;
+const mapStateToProps = () => {};
+const mapDispatchToProps = dispatch => {
+  return {
+    addTodo: message => dispatch(actions.addTodo(message))
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(AddTodo);

@@ -4,12 +4,8 @@ const createStore = (reducer = () => {}, initialState) => {
   let subscriptions = [];
 
   const dispatch = action => {
-    if (typeof action === "function") {
-      action(dispatch);
-    } else {
-      state = reducer(state, action);
-      subscriptions.forEach(s => s());
-    }
+    state = reducer(state, action);
+    subscriptions.forEach(s => s());
   };
   const subscribe = s => {
     subscriptions.push(s);
