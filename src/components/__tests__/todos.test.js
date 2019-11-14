@@ -14,6 +14,20 @@ and then returns another Component`, () => {
   render(<Todos />);
 });
 
+it(`adds a todo and renders it as incomplete`, () => {
+  const { getByLabelText } = render(<Todos />);
+  fireEvent.click(getByLabelText("add todo"));
+
+  fireEvent.change(getByLabelText("message"), {
+    target: { value: "attend react chapter" }
+  });
+
+  fireEvent.click(getByLabelText("save todo"));
+
+  expect(
+    getByLabelText(/incomplete attend react chapter/i)
+  ).toBeInTheDocument();
+});
 it(`displays incomplete todos (ideally) using getIncompleteTodos selector`, () => {
   const { getByLabelText } = render(<Todos />, {
     todos: [

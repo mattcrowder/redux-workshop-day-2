@@ -33,13 +33,21 @@ class AddTodo extends React.Component {
           <CardContent>
             <TextField
               variant="outlined"
+              inputProps={{
+                "aria-label": "message"
+              }}
               label="Message"
               value={message}
               onChange={e => this.setState({ message: e.target.value })}
             />
           </CardContent>
           <CardActions>
-            <Button variant="outlined" color="primary" onClick={this.addTodo}>
+            <Button
+              aria-label="save todo"
+              variant="outlined"
+              color="primary"
+              onClick={this.addTodo}
+            >
               Save
             </Button>
           </CardActions>

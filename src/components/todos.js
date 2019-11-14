@@ -32,6 +32,7 @@ class Todos extends React.Component {
           return <Todo key={todo.id} todo={todo} />;
         })}
         <Fab
+          aria-label="add todo"
           color="secondary"
           onClick={() => this.setState({ isAdding: true })}
         >
